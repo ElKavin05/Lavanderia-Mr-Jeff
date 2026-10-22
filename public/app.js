@@ -40,6 +40,7 @@ const searchInput = document.querySelector("#catalogue-search");
 const tableBody = document.querySelector("#price-table-body");
 const catalogueSummary = document.querySelector("#catalogue-summary");
 const emptyState = document.querySelector("#empty-state");
+const serviceCategoryLinks = document.querySelectorAll("[data-category-link]");
 const menuToggle = document.querySelector(".menu-toggle");
 const menuToggleLabel = menuToggle.querySelector(".visually-hidden");
 const primaryNav = document.querySelector(".primary-nav");
@@ -91,15 +92,30 @@ function renderTable() {
   document.querySelector(".catalogue__table-wrap").hidden = !filtered.length;
 }
 
+function selectCategory(category) {
+  selectedCategory = category;
+  renderTabs();
+  renderTable();
+}
+
 categoryTabs.addEventListener("click", (event) => {
   const button = event.target.closest("[data-category]");
   if (!button) return;
-  selectedCategory = button.dataset.category;
-  renderTabs();
-  renderTable();
+  selectCategory(button.dataset.category);
 });
 
 searchInput.addEventListener("input", renderTable);
+
+serviceCategoryLinks.forEach((button) => {
+  button.addEventListener("click", () => {
+    searchInput.value = "";
+    selectCategory(button.dataset.categoryLink);
+    document.querySelector("#precios").scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  });
+});
 
 menuToggle.addEventListener("click", () => {
   const isOpen = menuToggle.getAttribute("aria-expanded") === "true";

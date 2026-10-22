@@ -16,7 +16,9 @@
 
 **FIRST VIEWPORT:** Una franja superior blanca lleva el logo y navegación. Debajo, una gran superficie azul organiza la propuesta y los dos CTAs. Un recibo/ficha blanca en el borde derecho muestra tres líneas de precio real y hace visible el catálogo antes del scroll; en móvil se convierte en una tira de tarifas bajo el mensaje.
 
-**FORM:** Ficha de cuidado y mostrador de tarifas, posición 3 de 7; `seed:13c01c35e420f2dc`. La página evita el hero publicitario estándar, sustituye tarjetas por bandas de servicio y usa una interfaz de catálogo como demostración principal.
+**FORM:** Ficha de cuidado y mostrador de tarifas, posición 3 de 7; `seed:13c01c35e420f2dc`. La página evita el hero publicitario estándar: después del recibo, una composición editorial de cuatro rutas convierte la elección del servicio en un filtro de catálogo. Lavandería es el ancla vertical; Dry clean, Planchado y Cuidado especializado organizan el resto sin recurrir a tarjetas repetidas.
+
+**INTERACTION:** Al pulsar una ruta, la búsqueda se limpia, se activa la categoría correspondiente y se desplaza la vista al catálogo. Cuidado especializado mantiene tres accesos independientes para Zapatillas, Teñido y Carteras. Las imágenes son bodegones generados para orientar; no se presentan como fotografía documental de Mr Jeff.
 
 **FINISH:** unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 

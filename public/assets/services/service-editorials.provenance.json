@@ -1,0 +1,23 @@
+{
+  "generated_utc": "2026-10-22",
+  "generator": "OpenAI image generation",
+  "purpose": "Imágenes editoriales para orientar los accesos de servicio de la landing de Mr Jeff San Francisco. No representan fotografías documentales del local ni promesas comerciales.",
+  "assets": [
+    {
+      "file": "lavanderia-editorial.webp",
+      "prompt_summary": "Bodegón editorial azul marino con ropa blanca y cian doblada, canastas y una toalla amarilla; sin personas, texto ni logotipos."
+    },
+    {
+      "file": "dry-clean-editorial.webp",
+      "prompt_summary": "Bodegón editorial azul marino de prendas delicadas protegidas, sin personas, texto ni logotipos."
+    },
+    {
+      "file": "planchado-editorial.webp",
+      "prompt_summary": "Bodegón editorial azul marino de una camisa blanca preparada para planchado, sin personas, texto ni logotipos."
+    },
+    {
+      "file": "especializados-editorial.webp",
+      "prompt_summary": "Bodegón editorial azul marino con zapatilla, cartera y textil para comunicar cuidado especializado; sin personas, texto ni logotipos."
+    }
+  ]
+}

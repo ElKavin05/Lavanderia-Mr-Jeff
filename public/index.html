@@ -70,14 +70,49 @@
       <section class="service-intro content-width" id="servicios" aria-labelledby="services-title">
         <div class="section-heading">
           <h2 id="services-title">Elige el cuidado que necesitas.</h2>
-          <p>Desde tu ropa del día a día hasta piezas que requieren atención especial, consulta las categorías y encuentra el precio antes de escribirnos.</p>
+          <p>Cada sección abre directamente las tarifas correspondientes. Explora el servicio que buscas y encuentra su precio antes de escribirnos.</p>
         </div>
-        <ul class="service-bands" role="list">
-          <li class="service-band service-band--laundry"><strong>Lavandería</strong><small>Ropa, hogar, bolsas y delivery</small></li>
-          <li class="service-band service-band--dry"><strong>Dry clean</strong><small>Prendas delicadas y especiales</small></li>
-          <li class="service-band service-band--press"><strong>Planchado</strong><small>Por pieza y por docena</small></li>
-          <li class="service-band service-band--special"><strong>Especializados</strong><small>Zapatillas, teñido y carteras</small></li>
-        </ul>
+        <div class="service-gallery" aria-label="Categorías de servicio">
+          <button class="service-portal service-portal--laundry" type="button" data-category-link="Lavandería" aria-controls="precios">
+            <span class="service-portal__media"><img src="./assets/services/lavanderia-editorial.webp" alt="Canasta con ropa blanca y azul cuidadosamente doblada" width="1120" height="1120" /></span>
+            <span class="service-portal__content">
+              <span class="service-portal__title">Lavandería</span>
+              <span class="service-portal__copy">Ropa diaria, hogar, bolsas y servicios complementarios.</span>
+              <span class="service-portal__action">Ver tarifas de lavandería <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg></span>
+            </span>
+          </button>
+
+          <button class="service-portal service-portal--dry" type="button" data-category-link="Dry Clean" aria-controls="precios">
+            <span class="service-portal__media"><img src="./assets/services/dry-clean-editorial.webp" alt="Prendas delicadas protegidas en una funda de cuidado" width="1120" height="1120" /></span>
+            <span class="service-portal__content">
+              <span class="service-portal__title">Dry clean</span>
+              <span class="service-portal__copy">Piezas delicadas, sastrería y prendas especiales.</span>
+              <span class="service-portal__action">Ver tarifas de dry clean <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg></span>
+            </span>
+          </button>
+
+          <button class="service-portal service-portal--press" type="button" data-category-link="Planchado" aria-controls="precios">
+            <span class="service-portal__media"><img src="./assets/services/planchado-editorial.webp" alt="Camisa blanca preparada para planchado sobre una tabla azul" width="1120" height="1120" /></span>
+            <span class="service-portal__content">
+              <span class="service-portal__title">Planchado</span>
+              <span class="service-portal__copy">Por pieza, por media docena o por docena.</span>
+              <span class="service-portal__action">Ver tarifas de planchado <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg></span>
+            </span>
+          </button>
+
+          <article class="service-portal service-portal--special">
+            <span class="service-portal__media"><img src="./assets/services/especializados-editorial.webp" alt="Zapatilla, cartera y textil preparados para cuidado especializado" width="1120" height="1120" /></span>
+            <div class="service-portal__content">
+              <h3 class="service-portal__title">Cuidado especializado</h3>
+              <p class="service-portal__copy">Elige el tipo de artículo para ver sus servicios y precios.</p>
+              <div class="service-portal__links">
+                <button type="button" data-category-link="Zapatillas" aria-controls="precios">Zapatillas <span aria-hidden="true">→</span></button>
+                <button type="button" data-category-link="Teñido" aria-controls="precios">Teñido <span aria-hidden="true">→</span></button>
+                <button type="button" data-category-link="Carteras" aria-controls="precios">Carteras <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="catalogue" id="precios" aria-labelledby="prices-title">

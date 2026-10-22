@@ -7,7 +7,7 @@
 
 - Una cabecera blanca y compacta lleva la identidad local y las rutas principales.
 - El hero es una superficie azul profundo con una ficha/recibo blanco de precios reales: el catálogo es la prueba de valor, no decoración.
-- Bandas de servicio, reglas finas y una tabla editorial sustituyen la retícula de tarjetas. El resultado debe sentirse útil, local y operativo.
+- Un selector editorial de cuidado —cuatro composiciones fotográficas de escala desigual— conecta el gesto de elegir un servicio con la tarifa real. No es una retícula de tarjetas: cada composición abre un destino concreto del catálogo.
 - El tono es directo y tranquilizador en español; se evita prometer horarios, cobertura, entrega o alianzas que no hayan sido confirmados.
 
 ## Tokens
@@ -27,7 +27,7 @@ La tipografía es **Jeff Sans**: el archivo variable `UbuntuSans-Variable.ttf`, 
 
 - `content-width`: ancho máximo de 1160px y márgenes laterales fluidos; en móvil, 40px y después 32px de aire total.
 - Hero: dos columnas en escritorio (mensaje + recibo inclinado); una columna en móvil. El azul profundo se mantiene deliberadamente limpio para que el recibo sea la prueba visual principal.
-- Servicio: cuatro bandas en cuadrícula 2×2 que pasan a una sola columna. Cada una recibe un borde interior de color de categoría.
+- Servicio: una composición editorial asimétrica. Lavandería ocupa el ancla vertical; Dry clean y Planchado forman dos momentos breves a la derecha; Cuidado especializado cierra a todo el ancho con accesos para Zapatillas, Teñido y Carteras. Cada control borra la búsqueda, activa su categoría y hace scroll al catálogo.
 - Catálogo: búsqueda por texto, botones de categoría con estado visible, resumen dinámico, tabla semántica y enlace al PDF completo. Una tarifa Express ambigua se muestra como “Consultar express”.
 - Conversión: el CTA de WhatsApp se repite en navegación, hero y cierre. Los enlaces sociales quedan en el pie.
 - Header móvil: botón accesible que abre una navegación fija de una columna y bloquea el scroll de fondo.
@@ -35,7 +35,7 @@ La tipografía es **Jeff Sans**: el archivo variable `UbuntuSans-Variable.ttf`, 
 ## Responsive, motion and accessibility
 
 - Puntos principales: escritorio libre; navegación y hero de una columna bajo 760px; ajustes de ritmo y CTAs a ancho completo bajo 480px.
-- La tira de servicios permite desplazamiento horizontal discreto en móvil; los botones de categoría siguen el mismo patrón y la tabla conserva scroll horizontal cuando es necesario.
+- La tira de servicios permite desplazamiento horizontal discreto en móvil; el selector editorial pasa a una secuencia vertical, los botones de categoría siguen el mismo patrón y la tabla conserva scroll horizontal cuando es necesario.
 - La ficha de precio tiene una deriva sutil; `prefers-reduced-motion` elimina animación, transiciones y scroll suave.
 - Controles con etiquetas, HTML semántico, enlace para saltar al catálogo, estados `aria-pressed`, foco amarillo de alto contraste y menú con `aria-expanded`.
 
@@ -52,6 +52,8 @@ La tipografía es **Jeff Sans**: el archivo variable `UbuntuSans-Variable.ttf`, 
 - Procedencia del logo: `public/assets/brand/mr-jeff-logo-oficial.png.provenance.json`.
 - Lista de precios de referencia: `public/assets/documentos/lista-de-precios-2026.pdf`.
 - Tipografía local: `public/assets/fonts/UbuntuSans-Variable.ttf`.
+- Imágenes editoriales de servicios: `public/assets/services/lavanderia-editorial.webp`, `dry-clean-editorial.webp`, `planchado-editorial.webp` y `especializados-editorial.webp`.
+- Procedencia de las imágenes editoriales: `public/assets/services/service-editorials.provenance.json`.
 - Investigación y decisiones editoriales: `docs/investigacion-marca.md`, `docs/catalogo-precios-2026.md`, `docs/recursos-visuales.md` y `docs/landing-surface-brief.md`.
 
-No se usaron activos de imagen generados con IA. La única imagen editorial es el logo oficial proporcionado por el cliente; las formas y efectos de la página son CSS.
+Las cuatro imágenes de servicios fueron generadas para este proyecto y se usan como orientación visual, no como una representación documental del local o de sus procesos. Sus prompts y finalidad están registrados junto a los archivos. El logo oficial sigue siendo el único activo de marca proporcionado por el cliente.
