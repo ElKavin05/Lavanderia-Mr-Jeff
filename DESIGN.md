@@ -29,7 +29,7 @@ La tipografía es **Jeff Sans**: el archivo variable `UbuntuSans-Variable.ttf`, 
 - Hero: dos columnas en escritorio (mensaje + recibo inclinado); una columna en móvil. El azul profundo se mantiene deliberadamente limpio para que el recibo sea la prueba visual principal.
 - Servicio: una composición editorial asimétrica. Lavandería ocupa el ancla vertical; Dry clean y Planchado forman dos momentos breves a la derecha; Cuidado especializado cierra a todo el ancho con accesos para Zapatillas, Teñido y Carteras. Cada control borra la búsqueda, activa su categoría y hace scroll al catálogo.
 - Catálogo: búsqueda por texto, botones de categoría con estado visible, resumen dinámico, tabla semántica y enlace al PDF completo. Una tarifa Express ambigua se muestra como “Consultar express”.
-- Conversión: el CTA de WhatsApp se repite en navegación, hero y cierre. Los enlaces sociales quedan en el pie.
+- Conversión: el CTA de WhatsApp se repite en navegación, hero y cierre. Al seleccionar una categoría, todos esos enlaces reciben un mensaje precargado con el servicio elegido; el catálogo revela además un enlace directo que nombra esa categoría. Los enlaces sociales quedan en el pie.
 - Header móvil: botón accesible que abre una navegación fija de una columna y bloquea el scroll de fondo.
 
 ## Responsive, motion and accessibility

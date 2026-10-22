@@ -41,6 +41,8 @@ const tableBody = document.querySelector("#price-table-body");
 const catalogueSummary = document.querySelector("#catalogue-summary");
 const emptyState = document.querySelector("#empty-state");
 const serviceCategoryLinks = document.querySelectorAll("[data-category-link]");
+const whatsappLinks = document.querySelectorAll("[data-whatsapp-link]");
+const catalogueWhatsapp = document.querySelector("#catalogue-whatsapp");
 const menuToggle = document.querySelector(".menu-toggle");
 const menuToggleLabel = menuToggle.querySelector(".visually-hidden");
 const primaryNav = document.querySelector(".primary-nav");
@@ -48,6 +50,30 @@ const primaryNav = document.querySelector(".primary-nav");
 let selectedCategory = "all";
 
 const money = (value) => `$${Number(value).toFixed(2)}`;
+const whatsappBaseUrl = "https://wa.me/mrjeffsanfrancisco";
+
+function getWhatsappMessage(category) {
+  if (category === "all") {
+    return "Hola, quisiera información sobre los servicios de Mr Jeff San Francisco.";
+  }
+
+  return `Hola, quisiera consultar sobre el servicio de ${category}.`;
+}
+
+function updateWhatsappLinks() {
+  const message = getWhatsappMessage(selectedCategory);
+  const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
+  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Todas";
+
+  whatsappLinks.forEach((link) => {
+    link.href = url;
+  });
+
+  catalogueWhatsapp.hidden = selectedCategory === "all";
+  catalogueWhatsapp.textContent = selectedCategory === "all"
+    ? "Consultar este servicio por WhatsApp"
+    : `Consultar ${selectedLabel} por WhatsApp ↗`;
+}
 
 function renderTabs() {
   categoryTabs.innerHTML = categories.map(({ id, label }) => `
@@ -96,6 +122,7 @@ function selectCategory(category) {
   selectedCategory = category;
   renderTabs();
   renderTable();
+  updateWhatsappLinks();
 }
 
 categoryTabs.addEventListener("click", (event) => {
@@ -135,3 +162,4 @@ primaryNav.addEventListener("click", (event) => {
 
 renderTabs();
 renderTable();
+updateWhatsappLinks();
