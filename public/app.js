@@ -35,103 +35,163 @@ const prices = [
   ["Planchado", "ALBA", 4, 3], ["Planchado", "Bodys", 1.25, 2.5], ["Planchado", "Bufanda", 2, 3], ["Planchado", "Chaleco", 2.5, 2.85], ["Planchado", "Cortinas 2 x 1.35", 8.95, 16], ["Planchado", "Duvet", 10, 15], ["Planchado", "Enterizo Largo", 3.95, 6], ["Planchado", "Falda Larga", 3, 6], ["Planchado", "Forro", 7, 10], ["Planchado", "Funda", 0.85, 1.5], ["Planchado", "Manta", 10, 15], ["Planchado", "Mantel (10 puestos)", 9.95, 12.95], ["Planchado", "Mantel (2 puesto)", 4.95, 5.95], ["Planchado", "Mantel (8 puestos)", 6.95, 9.95], ["Planchado", "Pantalon XL", 2.25, 4], ["Planchado", "Sabana", 7, 10], ["Planchado", "Servilleta Chica", 0.85, 1.25], ["Planchado", "Servilleta Grande", 1.5, 2.5], ["Planchado", "Servilleta Mediana", 1, 2], ["Planchado", "Sevilletas", 0.5, 1], ["Planchado", "Toga", 5, 10], ["Planchado", "Vestido Infaltil", 2.25, 4], ["Planchado", "Vestido XL", 4.75, 7]
 ].map(([category, item, regular, express]) => ({ category, item, regular, express }));
 
-const categoryTabs = document.querySelector("#category-tabs");
-const searchInput = document.querySelector("#catalogue-search");
-const tableBody = document.querySelector("#price-table-body");
+/* ─── DOM refs ─────────────────────────────────────────────────── */
+const categoryTabs     = document.querySelector("#category-tabs");
+const searchInput      = document.querySelector("#catalogue-search");
+const priceGrid        = document.querySelector("#price-grid");
 const catalogueSummary = document.querySelector("#catalogue-summary");
-const emptyState = document.querySelector("#empty-state");
+const emptyState       = document.querySelector("#empty-state");
 const serviceCategoryLinks = document.querySelectorAll("[data-category-link]");
-const whatsappLinks = document.querySelectorAll("[data-whatsapp-link]");
+const whatsappLinks    = document.querySelectorAll("[data-whatsapp-link]");
 const catalogueWhatsapp = document.querySelector("#catalogue-whatsapp");
-const menuToggle = document.querySelector(".menu-toggle");
-const menuToggleLabel = menuToggle.querySelector(".visually-hidden");
-const primaryNav = document.querySelector(".primary-nav");
+const menuToggle       = document.querySelector(".menu-toggle");
+const menuToggleLabel  = menuToggle.querySelector(".visually-hidden");
+const primaryNav       = document.querySelector(".primary-nav");
 
 let selectedCategory = "all";
 
-const money = (value) => `$${Number(value).toFixed(2)}`;
+/* ─── Helpers ───────────────────────────────────────────────────── */
+const money = (v) => `$${Number(v).toFixed(2)}`;
 const whatsappBaseUrl = "https://wa.me/mrjeffsanfrancisco";
 
+const WA_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>`;
+
 function getWhatsappMessage(category) {
-  if (category === "all") {
-    return "Hola, quisiera información sobre los servicios de Mr Jeff San Francisco.";
-  }
-
-  return `Hola, quisiera consultar sobre el servicio de ${category}.`;
+  if (category === "all") return "Hola, quisiera información sobre los servicios de Mr Jeff San Francisco.";
+  return `Hola, quisiera consultar sobre el servicio de ${category} en Mr Jeff San Francisco.`;
 }
 
-function updateWhatsappLinks() {
-  const message = getWhatsappMessage(selectedCategory);
-  const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
-  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Todas";
-
-  whatsappLinks.forEach((link) => {
-    link.href = url;
-  });
-
-  catalogueWhatsapp.hidden = selectedCategory === "all";
-  catalogueWhatsapp.textContent = selectedCategory === "all"
-    ? "Consultar este servicio por WhatsApp"
-    : `Consultar ${selectedLabel} por WhatsApp ↗`;
-}
-
-function renderTabs() {
-  categoryTabs.innerHTML = categories.map(({ id, label }) => `
-    <button class="category-tab" type="button" aria-pressed="${id === selectedCategory}" data-category="${id}">${label}</button>
-  `).join("");
+function getItemWhatsappUrl(item, category) {
+  const msg = `Hola, quisiera consultar sobre el servicio de *${item}* (${category}) en Mr Jeff San Francisco. ¿Podrían darme más información?`;
+  return `${whatsappBaseUrl}?text=${encodeURIComponent(msg)}`;
 }
 
 function getCategoryColor(category) {
   return categories.find(({ id }) => id === category)?.color || "#082e63";
 }
 
-function renderTable() {
-  const query = searchInput.value.trim().toLocaleLowerCase("es");
-  const filtered = prices.filter((entry) => {
-    const categoryMatch = selectedCategory === "all" || entry.category === selectedCategory;
-    const textMatch = entry.item.toLocaleLowerCase("es").includes(query);
-    return categoryMatch && textMatch;
+function highlight(text, query) {
+  if (!query) return text;
+  const esc = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.replace(new RegExp(`(${esc})`, "gi"), "<mark>$1</mark>");
+}
+
+/* ─── WhatsApp links update ─────────────────────────────────────── */
+function updateWhatsappLinks() {
+  const message = getWhatsappMessage(selectedCategory);
+  const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
+  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Todas";
+
+  whatsappLinks.forEach((link) => { link.href = url; });
+
+  catalogueWhatsapp.hidden = selectedCategory === "all";
+  if (!catalogueWhatsapp.hidden) {
+    catalogueWhatsapp.href = url;
+    catalogueWhatsapp.innerHTML = `${WA_ICON} Consultar ${selectedLabel} por WhatsApp <span aria-hidden="true">↗</span>`;
+  }
+}
+
+/* ─── Tab rendering ─────────────────────────────────────────────── */
+function renderTabs() {
+  categoryTabs.innerHTML = categories.map(({ id, label, color }) => {
+    const dot = id !== "all"
+      ? `<span class="tab-dot" style="background:${color}" aria-hidden="true"></span>`
+      : "";
+    return `<button class="category-tab" type="button" aria-pressed="${id === selectedCategory}" data-category="${id}">${dot}${label}</button>`;
+  }).join("");
+}
+
+/* ─── Card rendering ────────────────────────────────────────────── */
+function renderCard({ item, category, regular, express }, color, delay, query) {
+  const waUrl = getItemWhatsappUrl(item, category);
+  const expressHtml = express === null
+    ? `<span class="price-card__price-value price-card__price-value--consult">Consultar</span>`
+    : `<strong class="price-card__price-value">${money(express)}</strong>`;
+
+  return `
+    <article class="price-card" style="--cat-color:${color};animation-delay:${delay}ms">
+      <span class="price-card__name">${highlight(item, query)}</span>
+      <div class="price-card__prices">
+        <div class="price-card__price-block">
+          <span class="price-card__price-label">Regular</span>
+          <strong class="price-card__price-value">${money(regular)}</strong>
+        </div>
+        <div class="price-card__price-block price-card__price-block--express">
+          <span class="price-card__price-label">Express</span>
+          ${expressHtml}
+        </div>
+      </div>
+      <a class="price-card__wa-btn" href="${waUrl}" target="_blank" rel="noreferrer">
+        ${WA_ICON}
+        Consultar por WhatsApp
+      </a>
+    </article>`;
+}
+
+function renderCards() {
+  const rawQuery = searchInput.value.trim();
+  const query = rawQuery.toLocaleLowerCase("es");
+
+  const filtered = prices.filter(({ category, item }) => {
+    const catOk = selectedCategory === "all" || category === selectedCategory;
+    const txtOk = item.toLocaleLowerCase("es").includes(query);
+    return catOk && txtOk;
   });
 
-  const groups = filtered.reduce((accumulator, entry) => {
-    (accumulator[entry.category] ||= []).push(entry);
-    return accumulator;
-  }, {});
+  /* Preserve canonical category order */
+  const categoryOrder = categories.filter((c) => c.id !== "all").map((c) => c.id);
+  const groups = {};
+  categoryOrder.forEach((cat) => {
+    const entries = filtered.filter((e) => e.category === cat);
+    if (entries.length) groups[cat] = entries;
+  });
 
   const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Todas";
   catalogueSummary.textContent = filtered.length
-    ? `${filtered.length} tarifas destacadas · ${selectedLabel}${query ? ` · “${searchInput.value.trim()}”` : ""}`
+    ? `${filtered.length} tarifa${filtered.length !== 1 ? "s" : ""} · ${selectedLabel}${rawQuery ? ` · "${rawQuery}"` : ""}`
     : "Sin coincidencias en las tarifas destacadas";
 
-  tableBody.innerHTML = Object.entries(groups).map(([category, entries]) => `
-    <tr class="category-row" style="--category-color:${getCategoryColor(category)}"><th scope="rowgroup" colspan="3">${category}</th></tr>
-    ${entries.map(({ item, regular, express }) => `
-      <tr>
-        <td>${item}</td>
-        <td>${money(regular)}</td>
-        <td>${express === null ? '<span class="express-consult">Consultar express</span>' : money(express)}</td>
-      </tr>
-    `).join("")}
-  `).join("");
+  let globalIndex = 0;
+  priceGrid.innerHTML = Object.keys(groups).map((cat) => {
+    const entries = groups[cat];
+    const color = getCategoryColor(cat);
+
+    const header = `
+      <div class="price-group-header" style="--cat-color:${color}">
+        <span class="price-group-dot" aria-hidden="true"></span>
+        <h3 class="price-group-label">${cat}</h3>
+        <span class="price-group-count">${entries.length} servicio${entries.length !== 1 ? "s" : ""}</span>
+      </div>`;
+
+    const cards = entries.map((entry) => {
+      const delay = Math.min(globalIndex * 30, 380);
+      globalIndex++;
+      return renderCard(entry, color, delay, rawQuery);
+    }).join("");
+
+    return header + cards;
+  }).join("");
 
   emptyState.hidden = Boolean(filtered.length);
-  document.querySelector(".catalogue__table-wrap").hidden = !filtered.length;
+  priceGrid.hidden = !filtered.length;
 }
 
+/* ─── Category selection ────────────────────────────────────────── */
 function selectCategory(category) {
   selectedCategory = category;
   renderTabs();
-  renderTable();
+  renderCards();
   updateWhatsappLinks();
 }
 
-categoryTabs.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-category]");
-  if (!button) return;
-  selectCategory(button.dataset.category);
+/* ─── Event listeners ───────────────────────────────────────────── */
+categoryTabs.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-category]");
+  if (!btn) return;
+  selectCategory(btn.dataset.category);
 });
 
-searchInput.addEventListener("input", renderTable);
+searchInput.addEventListener("input", renderCards);
 
 serviceCategoryLinks.forEach((button) => {
   button.addEventListener("click", () => {
@@ -152,14 +212,15 @@ menuToggle.addEventListener("click", () => {
   document.body.classList.toggle("menu-open", !isOpen);
 });
 
-primaryNav.addEventListener("click", (event) => {
-  if (!event.target.closest("a")) return;
+primaryNav.addEventListener("click", (e) => {
+  if (!e.target.closest("a")) return;
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggleLabel.textContent = "Abrir navegación";
   primaryNav.classList.remove("is-open");
   document.body.classList.remove("menu-open");
 });
 
+/* ─── Init ──────────────────────────────────────────────────────── */
 renderTabs();
-renderTable();
+renderCards();
 updateWhatsappLinks();

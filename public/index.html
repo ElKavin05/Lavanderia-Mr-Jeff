@@ -45,22 +45,27 @@
             </div>
           </div>
 
-          <aside class="care-ticket" aria-label="Precios destacados">
-            <div class="care-ticket__topline">
-              <span>MR JEFF / 2026</span>
-              <span>CATÁLOGO</span>
+          <div class="hero__visual">
+            <div class="hero__image" aria-hidden="true">
+              <img src="./assets/services/lavanderia-editorial.webp" alt="" width="1120" height="1120" />
             </div>
-            <div class="care-ticket__mark" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-            <p class="care-ticket__title">Cuidado que se ajusta a tu rutina.</p>
-            <dl class="care-ticket__prices">
-              <div><dt>Bolsa chica</dt><dd>$7.50</dd></div>
-              <div><dt>Camisa · planchado</dt><dd>$1.25</dd></div>
-              <div><dt>Zapatillas de tela</dt><dd>$10.00</dd></div>
-            </dl>
-            <p class="care-ticket__note">Precios regulares del catálogo 2026.</p>
-          </aside>
+            <aside class="care-ticket" aria-label="Precios destacados">
+              <div class="care-ticket__topline">
+                <span>MR JEFF / 2026</span>
+                <span>CATÁLOGO</span>
+              </div>
+              <div class="care-ticket__mark" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <p class="care-ticket__title">Cuidado que se ajusta a tu rutina.</p>
+              <dl class="care-ticket__prices">
+                <div><dt>Bolsa chica</dt><dd>$7.50</dd></div>
+                <div><dt>Camisa · planchado</dt><dd>$1.25</dd></div>
+                <div><dt>Zapatillas de tela</dt><dd>$10.00</dd></div>
+              </dl>
+              <p class="care-ticket__note">Precios regulares del catálogo 2026.</p>
+            </aside>
+          </div>
         </div>
         <div class="service-marquee" aria-label="Servicios disponibles">
           <span>Lavandería</span><i aria-hidden="true"></i><span>Dry clean</span><i aria-hidden="true"></i><span>Planchado</span><i aria-hidden="true"></i><span>Zapatillas</span><i aria-hidden="true"></i><span>Teñido</span><i aria-hidden="true"></i><span>Carteras</span>
@@ -141,14 +146,7 @@
           </div>
 
           <p class="catalogue__summary" id="catalogue-summary" aria-live="polite"></p>
-          <div class="catalogue__table-wrap" tabindex="0">
-            <table class="price-table">
-              <thead>
-                <tr><th scope="col">Servicio</th><th scope="col">Regular</th><th scope="col">Express</th></tr>
-              </thead>
-              <tbody id="price-table-body"></tbody>
-            </table>
-          </div>
+          <div class="price-grid" id="price-grid" role="list" aria-label="Tarifas de servicios"></div>
           <div class="empty-state" id="empty-state" hidden>
             <p>No encontramos ese servicio en las tarifas destacadas.</p>
             <a href="./assets/documentos/lista-de-precios-2026.pdf" target="_blank" rel="noreferrer">Revisar la lista completa en PDF <span aria-hidden="true">↗</span></a>
