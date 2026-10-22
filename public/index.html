@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Mr Jeff San Francisco: lavandería, dry clean, planchado y servicios de cuidado con catálogo de precios 2026." />
+    <meta name="theme-color" content="#063b82" />
+    <title>Mr Jeff San Francisco | Cuidado de ropa</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#precios">Ir directo al catálogo</a>
+
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Mr Jeff San Francisco, inicio">
+        <span class="brand__frame" aria-hidden="true">
+          <img src="./assets/brand/mr-jeff-logo-oficial.png" alt="" width="1024" height="1024" />
+        </span>
+        <span class="brand__place">San Francisco</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="visually-hidden">Abrir navegación</span>
+        <span></span><span></span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Navegación principal">
+        <a href="#servicios">Servicios</a>
+        <a href="#precios">Precios 2026</a>
+        <a href="#contacto">Contacto</a>
+        <a class="nav-action" href="https://wa.me/mrjeffsanfrancisco" target="_blank" rel="noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero__inner content-width">
+          <div class="hero__copy">
+            <p class="hero__location"><span aria-hidden="true"></span> San Francisco, Panamá</p>
+            <h1 id="hero-title">Tu ropa vuelve <em>lista</em> para tu día.</h1>
+            <p class="hero__lede">Lavandería, dry clean, planchado y cuidado especial con precios claros para que coordines tu servicio por WhatsApp.</p>
+            <div class="hero__actions">
+              <a class="button button--bright" href="https://wa.me/mrjeffsanfrancisco" target="_blank" rel="noreferrer">Escríbenos por WhatsApp <span aria-hidden="true">↗</span></a>
+              <a class="text-link" href="#precios">Ver precios 2026 <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+
+          <aside class="care-ticket" aria-label="Precios destacados">
+            <div class="care-ticket__topline">
+              <span>MR JEFF / 2026</span>
+              <span>CATÁLOGO</span>
+            </div>
+            <div class="care-ticket__mark" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <p class="care-ticket__title">Cuidado que se ajusta a tu rutina.</p>
+            <dl class="care-ticket__prices">
+              <div><dt>Bolsa chica</dt><dd>$7.50</dd></div>
+              <div><dt>Camisa · planchado</dt><dd>$1.25</dd></div>
+              <div><dt>Zapatillas de tela</dt><dd>$10.00</dd></div>
+            </dl>
+            <p class="care-ticket__note">Precios regulares del catálogo 2026.</p>
+          </aside>
+        </div>
+        <div class="service-marquee" aria-label="Servicios disponibles">
+          <span>Lavandería</span><i aria-hidden="true"></i><span>Dry clean</span><i aria-hidden="true"></i><span>Planchado</span><i aria-hidden="true"></i><span>Zapatillas</span><i aria-hidden="true"></i><span>Teñido</span><i aria-hidden="true"></i><span>Carteras</span>
+        </div>
+      </section>
+
+      <section class="service-intro content-width" id="servicios" aria-labelledby="services-title">
+        <div class="section-heading">
+          <h2 id="services-title">Elige el cuidado que necesitas.</h2>
+          <p>Desde tu ropa del día a día hasta piezas que requieren atención especial, consulta las categorías y encuentra el precio antes de escribirnos.</p>
+        </div>
+        <ul class="service-bands" role="list">
+          <li class="service-band service-band--laundry"><strong>Lavandería</strong><small>Ropa, hogar, bolsas y delivery</small></li>
+          <li class="service-band service-band--dry"><strong>Dry clean</strong><small>Prendas delicadas y especiales</small></li>
+          <li class="service-band service-band--press"><strong>Planchado</strong><small>Por pieza y por docena</small></li>
+          <li class="service-band service-band--special"><strong>Especializados</strong><small>Zapatillas, teñido y carteras</small></li>
+        </ul>
+      </section>
+
+      <section class="catalogue" id="precios" aria-labelledby="prices-title">
+        <div class="content-width">
+          <div class="catalogue__header">
+            <div class="section-heading">
+              <h2 id="prices-title">Precios 2026, a tu ritmo.</h2>
+              <p>Filtra por categoría o busca la prenda. Cuando una tarifa Express no está definida claramente en la lista, te indicamos consultarla.</p>
+            </div>
+            <a class="download-link" href="./assets/documentos/lista-de-precios-2026.pdf" target="_blank" rel="noreferrer">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3" /></svg>
+              Abrir lista completa (PDF)
+            </a>
+          </div>
+
+          <div class="catalogue__controls" aria-label="Controles del catálogo">
+            <label class="search-field" for="catalogue-search">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="5.8" /><path d="m15.2 15.2 4.3 4.3" /></svg>
+              <span class="visually-hidden">Buscar servicio o prenda</span>
+              <input id="catalogue-search" type="search" placeholder="Busca una prenda o servicio" autocomplete="off" />
+            </label>
+            <div class="category-tabs" aria-label="Categorías de precios" id="category-tabs"></div>
+          </div>
+
+          <p class="catalogue__summary" id="catalogue-summary" aria-live="polite"></p>
+          <div class="catalogue__table-wrap" tabindex="0">
+            <table class="price-table">
+              <thead>
+                <tr><th scope="col">Servicio</th><th scope="col">Regular</th><th scope="col">Express</th></tr>
+              </thead>
+              <tbody id="price-table-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="empty-state" hidden>
+            <p>No encontramos ese servicio en las tarifas destacadas.</p>
+            <a href="./assets/documentos/lista-de-precios-2026.pdf" target="_blank" rel="noreferrer">Revisar la lista completa en PDF <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="catalogue__footnote">Las tarifas mostradas provienen de la lista de precios 2026 proporcionada por Mr Jeff San Francisco. El PDF original permanece disponible como referencia.</p>
+        </div>
+      </section>
+
+      <section class="question-section content-width" aria-labelledby="question-title">
+        <div>
+          <h2 id="question-title">Cuéntanos qué necesitas cuidar.</h2>
+          <p>Para confirmar disponibilidad, Express, delivery o cualquier caso especial, escríbenos directamente por WhatsApp.</p>
+        </div>
+        <a class="button button--ink" href="https://wa.me/mrjeffsanfrancisco" target="_blank" rel="noreferrer">Consultar por WhatsApp <span aria-hidden="true">↗</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contacto">
+      <div class="content-width site-footer__grid">
+        <div>
+          <a class="footer-brand" href="#inicio">Mr Jeff <span>San Francisco</span></a>
+          <p>Mr Jeff San Francisco<br />Cuidado de ropa con atención por WhatsApp.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://wa.me/mrjeffsanfrancisco" target="_blank" rel="noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
+          <a href="https://www.instagram.com/mrjeffsanfrancisco/" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+          <a href="https://www.facebook.com/mrjeffsanfrancisc" target="_blank" rel="noreferrer">Facebook <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="site-footer__small">Catálogo 2026 proporcionado por el cliente. Confirma condiciones especiales por WhatsApp.</p>
+      </div>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
