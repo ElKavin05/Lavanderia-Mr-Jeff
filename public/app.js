@@ -1,5 +1,4 @@
 const categories = [
-  { id: "all", label: "Todas", color: "#082e63" },
   { id: "Lavandería", label: "Lavandería", color: "#13ace6" },
   { id: "Dry Clean", label: "Dry Clean", color: "#48c84c" },
   { id: "Planchado", label: "Planchado", color: "#ce0c2c" },
@@ -48,16 +47,16 @@ const menuToggle       = document.querySelector(".menu-toggle");
 const menuToggleLabel  = menuToggle.querySelector(".visually-hidden");
 const primaryNav       = document.querySelector(".primary-nav");
 
-let selectedCategory = "all";
+let selectedCategory = null;
 
 /* ─── Helpers ───────────────────────────────────────────────────── */
 const money = (v) => `$${Number(v).toFixed(2)}`;
-const whatsappBaseUrl = "https://wa.me/mrjeffsanfrancisco";
+const whatsappBaseUrl = "https://wa.me/50769990165";
 
 const WA_ICON = `<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>`;
 
 function getWhatsappMessage(category) {
-  if (category === "all") return "Hola, quisiera información sobre los servicios de Mr Jeff San Francisco.";
+  if (!category) return "Hola, quisiera información sobre los servicios de Mr Jeff San Francisco.";
   return `Hola, quisiera consultar sobre el servicio de ${category} en Mr Jeff San Francisco.`;
 }
 
@@ -80,12 +79,12 @@ function highlight(text, query) {
 function updateWhatsappLinks() {
   const message = getWhatsappMessage(selectedCategory);
   const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
-  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Todas";
+  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label;
 
   whatsappLinks.forEach((link) => { link.href = url; });
 
-  catalogueWhatsapp.hidden = selectedCategory === "all";
-  if (!catalogueWhatsapp.hidden) {
+  catalogueWhatsapp.hidden = !selectedCategory;
+  if (!catalogueWhatsapp.hidden && selectedLabel) {
     catalogueWhatsapp.href = url;
     catalogueWhatsapp.innerHTML = `${WA_ICON} Consultar ${selectedLabel} por WhatsApp <span aria-hidden="true">↗</span>`;
   }
@@ -94,10 +93,7 @@ function updateWhatsappLinks() {
 /* ─── Tab rendering ─────────────────────────────────────────────── */
 function renderTabs() {
   categoryTabs.innerHTML = categories.map(({ id, label, color }) => {
-    const dot = id !== "all"
-      ? `<span class="tab-dot" style="background:${color}" aria-hidden="true"></span>`
-      : "";
-    return `<button class="category-tab" type="button" aria-pressed="${id === selectedCategory}" data-category="${id}">${dot}${label}</button>`;
+    return `<button class="category-tab" type="button" aria-pressed="${id === selectedCategory}" data-category="${id}"><span class="tab-dot" style="background:${color}" aria-hidden="true"></span>${label}</button>`;
   }).join("");
 }
 
@@ -132,21 +128,30 @@ function renderCards() {
   const rawQuery = searchInput.value.trim();
   const query = rawQuery.toLocaleLowerCase("es");
 
+  // Si no hay categoría seleccionada ni texto de búsqueda, las tarifas permanecen ocultas
+  if (!selectedCategory && !query) {
+    priceGrid.innerHTML = "";
+    priceGrid.hidden = true;
+    emptyState.hidden = true;
+    catalogueSummary.textContent = "Selecciona una categoría arriba o escribe una prenda para ver las tarifas.";
+    return;
+  }
+
   const filtered = prices.filter(({ category, item }) => {
-    const catOk = selectedCategory === "all" || category === selectedCategory;
+    const catOk = selectedCategory ? category === selectedCategory : true;
     const txtOk = item.toLocaleLowerCase("es").includes(query);
     return catOk && txtOk;
   });
 
   /* Preserve canonical category order */
-  const categoryOrder = categories.filter((c) => c.id !== "all").map((c) => c.id);
+  const categoryOrder = categories.map((c) => c.id);
   const groups = {};
   categoryOrder.forEach((cat) => {
     const entries = filtered.filter((e) => e.category === cat);
     if (entries.length) groups[cat] = entries;
   });
 
-  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Todas";
+  const selectedLabel = categories.find(({ id }) => id === selectedCategory)?.label || "Búsqueda";
   catalogueSummary.textContent = filtered.length
     ? `${filtered.length} tarifa${filtered.length !== 1 ? "s" : ""} · ${selectedLabel}${rawQuery ? ` · "${rawQuery}"` : ""}`
     : "Sin coincidencias en las tarifas destacadas";
@@ -188,10 +193,21 @@ function selectCategory(category) {
 categoryTabs.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-category]");
   if (!btn) return;
-  selectCategory(btn.dataset.category);
+  const cat = btn.dataset.category;
+  if (selectedCategory === cat) {
+    selectedCategory = null;
+  } else {
+    selectedCategory = cat;
+  }
+  renderTabs();
+  renderCards();
+  updateWhatsappLinks();
 });
 
-searchInput.addEventListener("input", renderCards);
+searchInput.addEventListener("input", () => {
+  renderCards();
+  updateWhatsappLinks();
+});
 
 serviceCategoryLinks.forEach((button) => {
   button.addEventListener("click", () => {
@@ -224,3 +240,417 @@ primaryNav.addEventListener("click", (e) => {
 renderTabs();
 renderCards();
 updateWhatsappLinks();
+
+/* ─── Agendamiento Inteligente / Pedido Wizard ────────────────────── */
+const orderServicesData = [
+  { id: "bolsa-chica", name: "Bolsa Lavandería Chica", desc: "Lavado, secado y doblado diario", price: 7.50, unit: "1 bolsa" },
+  { id: "bolsa-grande", name: "Bolsa Lavandería Grande", desc: "Para ropa semanal o familia", price: 12.00, unit: "2 bolsas" },
+  { id: "docena-plancha", name: "Docena Planchada", desc: "Camisas, polos o pantalones listos", price: 14.75, unit: "12 piezas" },
+  { id: "camisa-lav-plan", name: "Camisa (Lavado + Planchado)", desc: "Tratamiento y almidonado impecable", price: 2.50, unit: "1 pieza" },
+  { id: "dry-traje", name: "Dry Clean · Traje / Saco", desc: "Tintorería y cuidado en seco delicado", price: 7.95, unit: "2 piezas" },
+  { id: "zapatillas", name: "Limpieza de Zapatillas", desc: "Desmanchado en tela, cuero o gamuza", price: 10.00, unit: "1 par" },
+  { id: "edredon", name: "Edredón Queen / Full", desc: "Lavado profundo e higienizado", price: 16.95, unit: "1 pieza" },
+  { id: "vestido-fiesta", name: "Vestido de Fiesta / Largo", desc: "Tratamiento especial de alta costura", price: 12.95, unit: "1 prenda" }
+];
+
+let wizardStep = 1;
+const selectedOrderServices = new Set(["bolsa-chica"]);
+let selectedGarmentPreference = "Ropa variada y cotidiana";
+let selectedDeliveryMode = "delivery";
+let deliveryPrice = 3.50;
+let selectedSpeed = "Tiempo Estándar";
+let selectedDateStr = "";
+let selectedTimeSlot = "9:00 AM – 11:00 AM";
+
+const orderSvcContainer = document.querySelector("#svc");
+const orderDaysContainer = document.querySelector("#days");
+const orderSlotsContainer = document.querySelector("#slots");
+const orderComboContainer = document.querySelector("#combo");
+const orderStaffContainer = document.querySelector("#staff");
+const orderSpeedContainer = document.querySelector("#speed-chips");
+const progBars = document.querySelectorAll("#prog i");
+const stepInfoEl = document.querySelector("#stepinfo");
+const wizardSteps = document.querySelectorAll(".order-wizard .step");
+const wizardBackBtn = document.querySelector("#back");
+const wizardNextBtn = document.querySelector("#next");
+const wizardErr = document.querySelector("#err");
+const orderNameInput = document.querySelector("#order-name");
+const orderAddressInput = document.querySelector("#order-address");
+const orderNotesInput = document.querySelector("#order-notes");
+const fldAddress = document.querySelector("#fld-address");
+
+const sumSvc = document.querySelector("#s-svc");
+const sumCombo = document.querySelector("#s-combo");
+const sumStaff = document.querySelector("#s-staff");
+const sumWhen = document.querySelector("#s-when");
+const sumSpeed = document.querySelector("#s-speed");
+const sumTotal = document.querySelector("#s-total");
+const waBubble = document.querySelector("#bubble");
+
+function renderWizardServices() {
+  if (!orderSvcContainer) return;
+  orderSvcContainer.innerHTML = orderServicesData.map((s) => {
+    const isSelected = selectedOrderServices.has(s.id);
+    return `
+      <div class="opt ${isSelected ? 'on' : ''}" data-svc-id="${s.id}" role="checkbox" aria-checked="${isSelected}" tabindex="0">
+        <div>
+          <div class="opt-header">
+            <h4>${s.name}</h4>
+            <span class="opt-check" aria-hidden="true">${isSelected ? '✓' : ''}</span>
+          </div>
+          <div class="d">${s.desc}</div>
+        </div>
+        <div class="m">
+          <span>${money(s.price)}</span>
+          <span>${s.unit}</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderWizardDays() {
+  if (!orderDaysContainer) return;
+  const days = [];
+  const monthNames = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+  
+  const now = new Date();
+  const startOffset = now.getHours() >= 17 ? 1 : 0;
+
+  for (let i = 0; i < 9; i++) {
+    const d = new Date();
+    d.setDate(now.getDate() + startOffset + i);
+    const dayOfWeek = dayNames[d.getDay()];
+    const dayNum = d.getDate();
+    const month = monthNames[d.getMonth()];
+    const isToday = i === 0 && startOffset === 0;
+    const dateStr = `${dayOfWeek} ${dayNum} ${month}`;
+    days.push({
+      dateStr,
+      label: isToday ? "Hoy" : dayOfWeek,
+      num: dayNum,
+      month
+    });
+  }
+
+  if (!selectedDateStr && days.length) {
+    selectedDateStr = days[0].dateStr;
+  }
+
+  orderDaysContainer.innerHTML = days.map((day) => {
+    const isSelected = day.dateStr === selectedDateStr;
+    return `
+      <div class="day ${isSelected ? 'on' : ''}" data-date="${day.dateStr}" role="button" tabindex="0" aria-pressed="${isSelected}">
+        <small>${day.label}</small>
+        <b>${day.num}</b>
+        <small>${day.month}</small>
+      </div>
+    `;
+  }).join("");
+}
+
+function calculateOrderTotal() {
+  let subtotal = 0;
+  selectedOrderServices.forEach((id) => {
+    const item = orderServicesData.find((s) => s.id === id);
+    if (item) subtotal += item.price;
+  });
+  const delivery = selectedDeliveryMode === "delivery" ? deliveryPrice : 0;
+  return subtotal + delivery;
+}
+
+function buildOrderWhatsAppMessage() {
+  const selectedItems = Array.from(selectedOrderServices).map((id) => {
+    const item = orderServicesData.find((s) => s.id === id);
+    return item ? `• ${item.name} ($${item.price.toFixed(2)})` : null;
+  }).filter(Boolean);
+
+  const servicesText = selectedItems.length
+    ? selectedItems.join("\n")
+    : "• Ningún servicio seleccionado aún";
+
+  const total = calculateOrderTotal();
+  const name = orderNameInput?.value.trim() || "Por confirmar";
+  const address = selectedDeliveryMode === "delivery"
+    ? (orderAddressInput?.value.trim() || "Por confirmar")
+    : "Entrega directa en sucursal San Francisco";
+  const notes = orderNotesInput?.value.trim() || "Sin notas adicionales";
+
+  return `👋 ¡Hola Mr Jeff San Francisco! Quisiera agendar un pedido de lavandería:
+
+🧺 *Servicios seleccionados:*
+${servicesText}
+
+✨ *Preferencia:* ${selectedGarmentPreference}
+🚚 *Modalidad:* ${selectedDeliveryMode === "delivery" ? "Delivery a domicilio (+$3.50)" : "Entrega en sucursal (Sin costo)"}
+⚡ *Velocidad:* ${selectedSpeed}
+📅 *Fecha y franja:* ${selectedDateStr || "Por definir"} · ${selectedTimeSlot}
+👤 *Nombre:* ${name}
+📍 *Dirección:* ${address}
+📝 *Notas:* ${notes}
+
+💰 *Total estimado:* $${total.toFixed(2)}
+¿Me confirman disponibilidad para coordinar? ¡Muchas gracias!`;
+}
+
+function updateOrderSummary() {
+  const selectedItems = Array.from(selectedOrderServices).map((id) => {
+    return orderServicesData.find((s) => s.id === id);
+  }).filter(Boolean);
+
+  if (selectedItems.length === 0) {
+    if (sumSvc) sumSvc.textContent = "Ninguno seleccionado";
+  } else if (selectedItems.length === 1) {
+    if (sumSvc) sumSvc.textContent = `${selectedItems[0].name} ($${selectedItems[0].price.toFixed(2)})`;
+  } else {
+    if (sumSvc) sumSvc.textContent = `${selectedItems.length} servicios (${money(selectedItems.reduce((acc, curr) => acc + curr.price, 0))})`;
+  }
+
+  if (sumCombo) sumCombo.textContent = selectedGarmentPreference;
+  if (sumStaff) sumStaff.textContent = selectedDeliveryMode === "delivery" ? "Delivery a domicilio (+$3.50)" : "Entrega en sucursal";
+  if (sumWhen) sumWhen.textContent = selectedDateStr ? `${selectedDateStr} · ${selectedTimeSlot}` : "—";
+  if (sumSpeed) sumSpeed.textContent = selectedSpeed;
+  if (sumTotal) sumTotal.textContent = money(calculateOrderTotal());
+
+  if (waBubble) {
+    waBubble.textContent = buildOrderWhatsAppMessage();
+  }
+}
+
+function setWizardStep(step) {
+  wizardStep = step;
+
+  progBars.forEach((bar, idx) => {
+    bar.classList.toggle("on", idx < wizardStep);
+  });
+  const progContainer = document.querySelector("#prog");
+  if (progContainer) progContainer.setAttribute("aria-valuenow", String(wizardStep));
+
+  const stepTitles = [
+    "Paso 1 de 4 · Servicios de cuidado",
+    "Paso 2 de 4 · Modalidad y Entrega",
+    "Paso 3 de 4 · Fecha y Horario",
+    "Paso 4 de 4 · Datos de contacto"
+  ];
+  if (stepInfoEl) stepInfoEl.textContent = stepTitles[wizardStep - 1];
+
+  wizardSteps.forEach((s) => {
+    const sNum = Number(s.dataset.s);
+    s.classList.toggle("show", sNum === wizardStep);
+  });
+
+  if (wizardBackBtn) {
+    wizardBackBtn.style.visibility = wizardStep > 1 ? "visible" : "hidden";
+  }
+
+  if (wizardNextBtn) {
+    if (wizardStep === 4) {
+      wizardNextBtn.innerHTML = `Confirmar por WhatsApp <span aria-hidden="true">↗</span>`;
+      wizardNextBtn.classList.add("btn-wa");
+    } else {
+      wizardNextBtn.innerHTML = `Continuar →`;
+      wizardNextBtn.classList.remove("btn-wa");
+    }
+  }
+
+  if (wizardErr) {
+    wizardErr.hidden = true;
+    wizardErr.textContent = "";
+  }
+}
+
+function validateAndAdvanceStep() {
+  if (wizardStep === 1) {
+    if (selectedOrderServices.size === 0) {
+      showWizardError("Por favor selecciona al menos un servicio para continuar.");
+      return;
+    }
+    setWizardStep(2);
+  } else if (wizardStep === 2) {
+    setWizardStep(3);
+  } else if (wizardStep === 3) {
+    if (!selectedDateStr) {
+      showWizardError("Por favor selecciona un día para tu pedido.");
+      return;
+    }
+    setWizardStep(4);
+  } else if (wizardStep === 4) {
+    const name = orderNameInput?.value.trim();
+    if (!name) {
+      showWizardError("Por favor escribe tu nombre completo.");
+      orderNameInput?.focus();
+      return;
+    }
+    if (selectedDeliveryMode === "delivery") {
+      const address = orderAddressInput?.value.trim();
+      if (!address) {
+        showWizardError("Por favor ingresa tu dirección en San Francisco para la recogida a domicilio.");
+        orderAddressInput?.focus();
+        return;
+      }
+    }
+    const msg = buildOrderWhatsAppMessage();
+    const finalUrl = `${whatsappBaseUrl}?text=${encodeURIComponent(msg)}`;
+    window.open(finalUrl, "_blank", "noreferrer");
+  }
+}
+
+function showWizardError(msg) {
+  if (!wizardErr) return;
+  wizardErr.textContent = msg;
+  wizardErr.hidden = false;
+  wizardErr.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+/* ─── Wizard Event Listeners ─────────────────────────────────────── */
+if (orderSvcContainer) {
+  orderSvcContainer.addEventListener("click", (e) => {
+    const opt = e.target.closest(".opt");
+    if (!opt) return;
+    const id = opt.dataset.svcId;
+    if (selectedOrderServices.has(id)) {
+      selectedOrderServices.delete(id);
+    } else {
+      selectedOrderServices.add(id);
+    }
+    renderWizardServices();
+    updateOrderSummary();
+    if (wizardErr) wizardErr.hidden = true;
+  });
+
+  orderSvcContainer.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      const opt = e.target.closest(".opt");
+      if (opt) {
+        e.preventDefault();
+        opt.click();
+      }
+    }
+  });
+}
+
+if (orderComboContainer) {
+  orderComboContainer.addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    orderComboContainer.querySelectorAll(".chip").forEach((c) => {
+      c.classList.remove("on");
+      c.setAttribute("aria-pressed", "false");
+    });
+    chip.classList.add("on");
+    chip.setAttribute("aria-pressed", "true");
+    selectedGarmentPreference = chip.dataset.v;
+    updateOrderSummary();
+  });
+}
+
+if (orderStaffContainer) {
+  orderStaffContainer.addEventListener("click", (e) => {
+    const st = e.target.closest(".st");
+    if (!st) return;
+    orderStaffContainer.querySelectorAll(".st").forEach((s) => {
+      s.classList.remove("on");
+      s.setAttribute("aria-pressed", "false");
+    });
+    st.classList.add("on");
+    st.setAttribute("aria-pressed", "true");
+    selectedDeliveryMode = st.dataset.mode;
+    deliveryPrice = Number(st.dataset.fee) || 0;
+    if (fldAddress) {
+      fldAddress.style.display = selectedDeliveryMode === "delivery" ? "block" : "none";
+    }
+    updateOrderSummary();
+  });
+
+  orderStaffContainer.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      const st = e.target.closest(".st");
+      if (st) {
+        e.preventDefault();
+        st.click();
+      }
+    }
+  });
+}
+
+if (orderSpeedContainer) {
+  orderSpeedContainer.addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    orderSpeedContainer.querySelectorAll(".chip").forEach((c) => {
+      c.classList.remove("on");
+      c.setAttribute("aria-pressed", "false");
+    });
+    chip.classList.add("on");
+    chip.setAttribute("aria-pressed", "true");
+    selectedSpeed = chip.dataset.speed;
+    updateOrderSummary();
+  });
+}
+
+if (orderDaysContainer) {
+  orderDaysContainer.addEventListener("click", (e) => {
+    const day = e.target.closest(".day");
+    if (!day || day.classList.contains("off")) return;
+    orderDaysContainer.querySelectorAll(".day").forEach((d) => {
+      d.classList.remove("on");
+      d.setAttribute("aria-pressed", "false");
+    });
+    day.classList.add("on");
+    day.setAttribute("aria-pressed", "true");
+    selectedDateStr = day.dataset.date;
+    updateOrderSummary();
+  });
+
+  orderDaysContainer.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      const day = e.target.closest(".day");
+      if (day) {
+        e.preventDefault();
+        day.click();
+      }
+    }
+  });
+}
+
+if (orderSlotsContainer) {
+  orderSlotsContainer.addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    orderSlotsContainer.querySelectorAll(".chip").forEach((c) => {
+      c.classList.remove("on");
+      c.setAttribute("aria-pressed", "false");
+    });
+    chip.classList.add("on");
+    chip.setAttribute("aria-pressed", "true");
+    selectedTimeSlot = chip.dataset.slot;
+    updateOrderSummary();
+  });
+}
+
+[orderNameInput, orderAddressInput, orderNotesInput].forEach((input) => {
+  if (input) {
+    input.addEventListener("input", () => {
+      updateOrderSummary();
+      if (wizardErr) wizardErr.hidden = true;
+    });
+  }
+});
+
+if (wizardNextBtn) {
+  wizardNextBtn.addEventListener("click", validateAndAdvanceStep);
+}
+
+if (wizardBackBtn) {
+  wizardBackBtn.addEventListener("click", () => {
+    if (wizardStep > 1) {
+      setWizardStep(wizardStep - 1);
+    }
+  });
+}
+
+renderWizardServices();
+renderWizardDays();
+updateOrderSummary();
+

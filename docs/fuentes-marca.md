@@ -8,7 +8,7 @@ Investigación realizada el 22 de octubre de 2026. Este archivo separa la identi
 | --- | --- | --- | --- |
 | Facebook | [facebook.com/mrjeffsanfrancisc](https://www.facebook.com/mrjeffsanfrancisc) | **Confirmada por cliente.** La página exige inicio de sesión en la consulta automatizada, por lo que no se tomaron datos adicionales de ella. | Enlace social; no extraer ni reutilizar imágenes sin validación adicional. |
 | Instagram | [@mrjeffsanfrancisco](https://www.instagram.com/mrjeffsanfrancisco/) | **Cuenta oficial con confianza alta.** Nombre visible «Mr Jeff San Francisco», etiqueta de ubicación homónima, teléfono 205-7603 / 6999-0165, enlace a WhatsApp y cruce histórico desde OfertaSimple. | Enlace social oficial y referencia primaria de tono e identidad local. |
-| WhatsApp | [wa.me/mrjeffsanfrancisco](https://wa.me/mrjeffsanfrancisco) | **Confirmado por fuente actual.** Está enlazado desde el perfil de Instagram y muestra el teléfono +507 6999-0165. | CTA principal, sujeto a confirmación final del cliente antes de publicar. |
+| WhatsApp | [wa.me/mrjeffsanfrancisco](https://wa.me/50769990165) | **Confirmado por fuente actual.** Está enlazado desde el perfil de Instagram y muestra el teléfono +507 6999-0165. | CTA principal, sujeto a confirmación final del cliente antes de publicar. |
 | Panamá Emprende | [Certificación de aviso de operación](https://www.panamaemprende.gob.pa/pdf-certificado/1140061/1) | **Fuente pública oficial.** Registra la razón comercial Mr Jeff San Francisco, S.A., estado vigente y actividades de lavandería/mensajería. Certificado emitido en noviembre de 2025. | Validación legal/comercial; no usar datos personales de la certificación en la landing. |
 | OfertaSimple (2021) | [Oferta de lavandería](https://ofertasimple.com/ofertas/panama/mr-jeff-san-francisco-servicios-de-lavanderia-20ago21-p) | **Fuente antigua.** Enlaza a `@mrjeffsanfrancisco`, ubica la sucursal en San Francisco y señala que la oferta expiró. | Solo contraste histórico y de identidad; no reutilizar precios, horarios ni condiciones. |
 | OfertaSimple (2023) | [Oferta de planchado](https://ofertasimple.com/ofertas/panama/mr-jeff-san-francisco-planchado-pantalones-camisas-25aug23-p) | **Fuente antigua.** Confirma que el planchado se ofreció para esta sucursal, pero la promoción venció. | Solo antecedente del servicio; no publicar precio, horario o condiciones de esta página. |
@@ -41,6 +41,6 @@ Incluir, tras validación final del cliente:
 
 - Instagram: `https://www.instagram.com/mrjeffsanfrancisco/`
 - Facebook: `https://www.facebook.com/mrjeffsanfrancisc`
-- WhatsApp: `https://wa.me/mrjeffsanfrancisco`
+- WhatsApp: `https://wa.me/50769990165`
 
 No incluir enlaces de la marca corporativa global ni de sucursales de otros países como si fueran canales de esta sede.

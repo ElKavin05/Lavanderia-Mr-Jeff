@@ -12,7 +12,7 @@
 **Otras:**
 
 - [Panamá Emprende](https://www.panamaemprende.gob.pa/pdf-certificado/1140061/1): certificación pública para la razón comercial Mr Jeff San Francisco, S.A.; estado vigente en el certificado de noviembre de 2025.
-- [WhatsApp de la sucursal](https://wa.me/mrjeffsanfrancisco): enlazado desde el Instagram local, con +507 6999-0165.
+- [WhatsApp de la sucursal](https://wa.me/50769990165): enlazado desde el Instagram local, con +507 6999-0165.
 - [OfertaSimple — lavandería 2021](https://ofertasimple.com/ofertas/panama/mr-jeff-san-francisco-servicios-de-lavanderia-20ago21-p): referencia histórica expirada que enlaza al mismo Instagram local.
 - [OfertaSimple — planchado 2023](https://ofertasimple.com/ofertas/panama/mr-jeff-san-francisco-planchado-pantalones-camisas-25aug23-p): antecedente histórico del servicio de planchado; promoción expirada.
 - **Lista de Precios 2026.pdf:** documento entregado directamente por el cliente. Es la fuente prioritaria para categorías, artículos y precios vigentes.
